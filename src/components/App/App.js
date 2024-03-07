@@ -1,12 +1,34 @@
-import React from 'react';
+import React from "react";
 
-import ToastPlayground from '../ToastPlayground';
-import Footer from '../Footer';
+import Footer from "../Footer";
+import ToastPlayground from "../ToastPlayground";
+export const ToastProviderContext = React.createContext();
 
 function App() {
+  const [msg, setMsg] = React.useState("");
+  const [variant, setVariant] = React.useState("notice");
+  const [toasts, setToasts] = React.useState([]);
+
+  function handleDismiss(key) {
+    const temp = toasts.filter((toast) => toast.key !== key);
+    setToasts(temp);
+  }
+
   return (
     <>
-      <ToastPlayground />
+      <ToastProviderContext.Provider
+        value={{
+          msg,
+          setMsg,
+          variant,
+          setVariant,
+          toasts,
+          setToasts,
+          handleDismiss,
+        }}
+      >
+        <ToastPlayground />
+      </ToastProviderContext.Provider>
       <Footer />
     </>
   );
